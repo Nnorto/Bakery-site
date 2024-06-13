@@ -1,0 +1,59 @@
+﻿@page
+@model Bakery.Pages.ManageProductsModel
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<h1>Manage Products</h1>
+
+<form method="post">
+    <h2>Add/Edit Product</h2>
+    <div>
+        <label>Name:</label>
+        <input type="text" asp-for="Product.Name" />
+    </div>
+    <div>
+        <label>Description:</label>
+        <input type="text" asp-for="Product.Description" />
+    </div>
+    <div>
+        <label>Price:</label>
+        <input type="text" asp-for="Product.Price" />
+    </div>
+    <div>
+        <label>Image Name:</label>
+        <input type="text" asp-for="Product.ImageName" />
+    </div>
+    <button type="submit" asp-page-handler="Add">Добавить товар</button>
+    <button type="submit" asp-page-handler="Clear">Очистить базу</button>
+</form>
+
+<h2>Products</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td><img src="/images/products/@product.ImageName" alt="@product.Name" width="50" /></td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" style="display:inline;">
+                        <input type="hidden" name="id" value="@product.Id" />
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
